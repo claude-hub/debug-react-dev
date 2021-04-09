@@ -64,6 +64,15 @@
 在 React15 中**Reconciler**是递归处理虚拟 DOM 的。React16 更新工作从递归变成了可以中断的循环过程。每次循环都会调用`shouldYield`判断当前是否有剩余时间。
 
 ```js
+// The work loop is an extremely hot path. Tell Closure not to inline it.
+/** @noinline */
+function workLoopSync() {
+  // Already timed out, so perform work without checking if we need to yield.
+  while (workInProgress !== null) {
+    workInProgress = performUnitOfWork(workInProgress);
+  }
+}
+
 /** @noinline */
 function workLoopConcurrent() {
   // Perform work until Scheduler asks us to yield

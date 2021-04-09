@@ -1,0 +1,3 @@
+const TEXT_ELEMENT = "TEXT_ELEMENT";
+
+export { TEXT_ELEMENT };
